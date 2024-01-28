@@ -1,3 +1,4 @@
+import 'package:firebase_adf/auth/email_password/login_page.dart';
 import 'package:firebase_adf/auth/email_password/register_page.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -22,6 +23,7 @@ class MyApp extends StatelessWidget {
       ),
       routes: {
         '/auth/email_password/register': (_) => const RegisterPage(),
+        '/auth/email_password/login': (_) => const LoginPage(),
       },
       home: const MyHomePage(title: 'Firebase tutorial'),
     );
@@ -54,6 +56,12 @@ class _MyHomePageState extends State<MyHomePage> {
                   Navigator.of(context).pushNamed('/auth/email_password/register');
                 },
                 child: const Text('Register user e-mail and password'),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed('/auth/email_password/login');
+                },
+                child: const Text('Login user e-mail and password'),
               ),
             ],
           ),

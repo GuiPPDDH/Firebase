@@ -1,14 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class RegisterPage extends StatefulWidget {
-  const RegisterPage({super.key});
+class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
 
   @override
-  State<RegisterPage> createState() => _RegisterPageState();
+  State<LoginPage> createState() => _LoginPageState();
 }
 
-class _RegisterPageState extends State<RegisterPage> {
+class _LoginPageState extends State<LoginPage> {
   final emailEC = TextEditingController();
   final passwordEC = TextEditingController();
 
@@ -19,20 +19,33 @@ class _RegisterPageState extends State<RegisterPage> {
     super.dispose();
   }
 
-  Future<void> registerUser() async {
-    final credential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+  Future<void> loginUser() async {
+    final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
       email: emailEC.text,
       password: passwordEC.text,
     );
 
-    credential.user?.sendEmailVerification();
+    final user = credential.user;
+    var message = '';
+
+    if (user != null && !user.emailVerified) {
+      message = 'E-mail não confirmado, verifique o seu e-mail.';
+    } else {
+      message = 'E-mail validado com sucesso!';
+    }
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Cadastro de usuário'),
+        title: const Text('Login de usuário'),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -54,8 +67,8 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                 ),
                 ElevatedButton(
-                  onPressed: registerUser,
-                  child: const Text('Cadastrar usuário'),
+                  onPressed: loginUser,
+                  child: const Text('Login usuário'),
                 ),
               ],
             ),
