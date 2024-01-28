@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "957008829184",
+    "project_id": "fir-adf",
+    "storage_bucket": "fir-adf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:957008829184:android:33dce284aa2af59d2071e5",
+        "android_client_info": {
+          "package_name": "br.com.academiadoflutter.firebase_adf"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDH6_PcGuXrDsl0d3l117-P3K15CBHrd2o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
