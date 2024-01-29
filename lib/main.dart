@@ -1,5 +1,7 @@
 import 'package:firebase_adf/auth/email_password/login_page.dart';
 import 'package:firebase_adf/auth/email_password/register_page.dart';
+import 'package:firebase_adf/auth/show_user.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -9,9 +11,14 @@ void main() async {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -24,6 +31,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/auth/email_password/register': (_) => const RegisterPage(),
         '/auth/email_password/login': (_) => const LoginPage(),
+        '/auth/show_user': (_) => const ShowUser(),
       },
       home: const MyHomePage(title: 'Firebase tutorial'),
     );
@@ -40,6 +48,14 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  @override
+  void initState() {
+    FirebaseAuth.instance.authStateChanges().listen((User? user) {
+      print('Usuário logado?, ${user != null}');
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,6 +78,12 @@ class _MyHomePageState extends State<MyHomePage> {
                   Navigator.of(context).pushNamed('/auth/email_password/login');
                 },
                 child: const Text('Login user e-mail and password'),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed('/auth/show_user');
+                },
+                child: const Text('Show user logged'),
               ),
             ],
           ),
